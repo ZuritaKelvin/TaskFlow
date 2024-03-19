@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'TaskZBwqwS.ui'
+## Form generated from reading UI file 'TasknPDfGE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.1
 ##
@@ -60,6 +60,7 @@ class Ui_Form(object):
 
         self.label_3 = QLabel(self.layoutWidget)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setMaximumSize(QSize(72, 16777215))
         self.label_3.setStyleSheet(u"")
 
         self.horizontalLayout.addWidget(self.label_3)

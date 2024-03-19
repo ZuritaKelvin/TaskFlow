@@ -37,9 +37,6 @@ class Task:
         self.cnx.commit()
 
     def editar_tarea(self, nombre, descripcion, fecha, hora):
-        tareas = self.obtener_tareas()
-        for i in tareas:
-            if i[0] == nombre:return -1
         query = "UPDATE tareas SET Descripcion = %s, Fecha = %s, Hora = %s WHERE Nombre = %s"
         valores = (descripcion, fecha, hora, nombre)
         self.cursor.execute(query, valores)

@@ -17,6 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QWidget)
+import Icons_rc
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -25,6 +26,9 @@ class Ui_Form(object):
         Form.resize(388, 356)
         Form.setMinimumSize(QSize(388, 356))
         Form.setMaximumSize(QSize(388, 16777215))
+        icon = QIcon()
+        icon.addFile(u":/Icons/Images/TaskFlowApp.png", QSize(), QIcon.Normal, QIcon.Off)
+        Form.setWindowIcon(icon)
         Form.setStyleSheet(u"background-color: rgb(31, 41, 55);color: white;text-align: center;")
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
@@ -59,14 +63,14 @@ class Ui_Form(object):
 "border-radius:4px;")
         self.lineEdit_2 = QLineEdit(Form)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
-        self.lineEdit_2.setGeometry(QRect(70, 240, 61, 21))
+        self.lineEdit_2.setGeometry(QRect(60, 240, 71, 21))
         self.lineEdit_2.setStyleSheet(u"	background-color:rgb(51, 65, 85);\n"
 "	border-radius: 2px;\n"
 "	text-decoration: none;\n"
 "	border: 1px solid #ccc")
         self.lineEdit_3 = QLineEdit(Form)
         self.lineEdit_3.setObjectName(u"lineEdit_3")
-        self.lineEdit_3.setGeometry(QRect(280, 240, 31, 20))
+        self.lineEdit_3.setGeometry(QRect(270, 240, 41, 20))
         self.lineEdit_3.setStyleSheet(u"	background-color:rgb(51, 65, 85);\n"
 "	border-radius: 2px;\n"
 "	text-decoration: none;\n"
@@ -78,6 +82,9 @@ class Ui_Form(object):
 "	border-radius: 2px;\n"
 "	text-decoration: none;\n"
 "	border: 1px solid #ccc")
+        self.label_6 = QLabel(Form)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setGeometry(QRect(150, 180, 83, 16))
         QWidget.setTabOrder(self.lineEdit, self.lineEdit_4)
         QWidget.setTabOrder(self.lineEdit_4, self.lineEdit_2)
         QWidget.setTabOrder(self.lineEdit_2, self.lineEdit_3)
@@ -101,5 +108,6 @@ class Ui_Form(object):
 #endif // QT_CONFIG(shortcut)
         self.lineEdit_2.setText(QCoreApplication.translate("Form", u"0000-00-00", None))
         self.lineEdit_3.setText(QCoreApplication.translate("Form", u"00:00", None))
+        self.label_6.setText("")
     # retranslateUi
 

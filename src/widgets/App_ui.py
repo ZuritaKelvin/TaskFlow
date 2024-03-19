@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
     QMenuBar, QPushButton, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
+import Icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,6 +26,9 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(772, 435)
         MainWindow.setMinimumSize(QSize(772, 435))
+        icon = QIcon()
+        icon.addFile(u":/Icons/Images/TaskFlowApp.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"*{\n"
 "background-color: rgb(31, 41, 55);color: white;\n"
 "}\n"
@@ -37,7 +41,7 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet(u"color: darkcyan;border: 2px solid #ccc;border-radius:4px;padding:2px;")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 711, 21))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 711, 0))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -131,6 +135,16 @@ class Ui_MainWindow(object):
         self.label_6.setObjectName(u"label_6")
         self.label_6.setGeometry(QRect(210, 40, 241, 16))
         self.label_6.setStyleSheet(u"color:red;")
+        self.pushButton_4 = QPushButton(self.centralwidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setGeometry(QRect(400, 20, 61, 51))
+        self.pushButton_4.setStyleSheet(u"*{\n"
+"background-color:rgb(0, 170, 127);border-radius: 18px;\n"
+"border-image: url(:/Icons/Images/GPT_3.png);\n"
+"}\n"
+"#pushButton_4:hover{\n"
+"background-color: rgb(0, 85, 0);\n"
+"}")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -156,5 +170,6 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Editar", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Eliminar", None))
         self.label_6.setText("")
+        self.pushButton_4.setText("")
     # retranslateUi
 

@@ -60,6 +60,7 @@ class Ui_Form(object):
 
         self.label_3 = QLabel(self.layoutWidget)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setMaximumSize(QSize(72, 16777215))
         self.label_3.setStyleSheet(u"")
 
         self.horizontalLayout.addWidget(self.label_3)

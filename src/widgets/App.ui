@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>TaskFlow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../Icons.qrc">
+    <normaloff>:/Icons/Images/TaskFlowApp.png</normaloff>:/Icons/Images/TaskFlowApp.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">*{
 background-color: rgb(31, 41, 55);color: white;
@@ -224,6 +228,28 @@ background-color: rgb(31, 41, 55);color: white;
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>20</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">*{
+background-color:rgb(0, 170, 127);border-radius: 18px;
+border-image: url(:/Icons/Images/GPT_3.png);
+}
+#pushButton_4:hover{
+background-color: rgb(0, 85, 0);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -237,6 +263,8 @@ background-color: rgb(31, 41, 55);color: white;
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>Images/GPT_3.png</file>
+    <file>Images/GPT.png</file>
+    <file>Images/TaskFlowApp.png</file>
+  </qresource>
+</RCC>
