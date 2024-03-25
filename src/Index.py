@@ -9,7 +9,7 @@ from dialog.submit import Ui_Dialog as Dialog
 from PySide6.QtWidgets import *
 from PySide6.QtCore import QRect,Signal, QSize, QTimer
 from dao.database import Task
-import time
+from openaiApi.main import AiGenerator
 task = Task('localhost','root','root')
 class App(QMainWindow, App):
     def __init__(self):
@@ -61,8 +61,11 @@ class App(QMainWindow, App):
         tareas = task.obtener_tareas()
         if tareas is not None:
             for i in tareas:
-                if i[0] not in self.task_names:  
-                    widget = Taskwidget(i[0],i[1],i[2],i[3])
+                print(i[0])
+                if i[0] not in self.task_names:
+                    horas = str(i[3]).split(':')
+                    hora = horas[0]+':'+horas[1]
+                    widget = Taskwidget(i[0],i[1],i[2],hora)
                     self.verticalLayout.addWidget(widget)
                     self.task_names.add(i[0])
                     w = self.verticalLayoutWidget.size().width()
@@ -77,7 +80,21 @@ class App(QMainWindow, App):
         return selecteds
     def GptCreator(self):
         self.gpt = Gpt()
+        self.gpt.buttonBox.accepted.connect(self.generateTask)
         self.gpt.show()
+    def generateTask(self):
+        if self.gpt.textEdit.toPlainText():
+            result = AiGenerator(self.gpt.textEdit.toPlainText())
+            tarea = result.split('_')
+            hora = tarea[3]+':00'
+            ins = task.añadir_tarea(tarea[0],tarea[1],tarea[2],hora.replace('.',''))
+            if ins == 1:
+                self.gpt.label_gpt.setText('>GPT: Generando...')
+                self.gpt.label_gpt.setStyleSheet('color: cyan;')
+                self.gpt.close()
+                self.actualizar_tareas()
+            else:
+                self.gpt.textEdit.setText('Nombre de tarea en uso.')
 class Taskwidget(QWidget, TaskWidget):
     def __init__(self, Nombre, Descripcion, Fecha, hora):
         super(Taskwidget, self).__init__()
