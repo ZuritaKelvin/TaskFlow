@@ -1,14 +1,14 @@
 
 from openai import OpenAI
 from datetime import date, datetime
+from openaiApi import config
 today = date.today()
 tomorrow = str(today).split('-')
 tomorrow[2] = str(int(tomorrow[2])+1)
 hora = datetime.now().strftime("%H:%M")
 hoy = date.today().strftime("%A")
-key = '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'
 # Crea una instancia del cliente de OpenAI
-client = OpenAI(api_key=key)
+client = OpenAI(api_key=config.api_key)
 
 def AiGenerator(peticion):
     completion = client.chat.completions.create(
