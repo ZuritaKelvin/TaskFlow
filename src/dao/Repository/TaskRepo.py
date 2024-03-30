@@ -1,11 +1,11 @@
 import mysql.connector
 
-class Task:
-    def __init__(self, host, usuario, contraseña):
+class TaskRepository:
+    def __init__(self):
         self.cnx = mysql.connector.connect(
-            host=host,
-            user=usuario,
-            password=contraseña
+            host="localhost",
+            user="root",
+            password="root"
         )
         self.cursor = self.cnx.cursor()
         self.cursor.execute("CREATE DATABASE IF NOT EXISTS Task")
@@ -45,10 +45,3 @@ class Task:
     def obtener_tareas(self):
         self.cursor.execute("SELECT * FROM tareas")
         return self.cursor.fetchall()
-    
-# taskClass = Task('localhost','root','123456')
-# # taskClass.añadir_tarea('Jugar','Debes jugar 30min de LOL','2024-03-12','10:30:00')
-# taskClass.eliminar_tarea('Jugar')
-# tareas = taskClass.obtener_tareas()
-# for i in tareas:
-#     print(i[3])

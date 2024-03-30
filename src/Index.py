@@ -1,5 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget
 from widgets.App import Ui_MainWindow as App
 from widgets.Task import Ui_Form as TaskWidget
@@ -8,9 +9,9 @@ from widgets.Gpt import Ui_Dialog as Ai
 from dialog.submit import Ui_Dialog as Dialog
 from PySide6.QtWidgets import *
 from PySide6.QtCore import QRect,Signal, QSize, QTimer
-from dao.database import Task
+from dao.Repository.TaskRepo import TaskRepository as Task
 from openaiApi.main import AiGenerator
-task = Task('localhost','root','root')
+task = Task()
 class App(QMainWindow, App):
     def __init__(self):
         super(App,self).__init__()
@@ -61,7 +62,6 @@ class App(QMainWindow, App):
         tareas = task.obtener_tareas()
         if tareas is not None:
             for i in tareas:
-                print(i[0])
                 if i[0] not in self.task_names:
                     horas = str(i[3]).split(':')
                     hora = horas[0]+':'+horas[1]
@@ -84,7 +84,7 @@ class App(QMainWindow, App):
         self.gpt.show()
     def generateTask(self):
         if self.gpt.textEdit.toPlainText():
-            result = AiGenerator(self.gpt.textEdit.toPlainText())
+            result = AiGenerator(self.gpt.textEdit.toPlainText(),self.task_names)
             tarea = result.split('_')
             hora = tarea[3]+':00'
             ins = task.añadir_tarea(tarea[0],tarea[1],tarea[2],hora.replace('.',''))
