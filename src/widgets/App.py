@@ -134,7 +134,7 @@ class Ui_MainWindow(object):
 "")
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(210, 40, 241, 16))
+        self.label_6.setGeometry(QRect(180, 40, 241, 16))
         self.label_6.setStyleSheet(u"color:red;")
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
