@@ -20,7 +20,6 @@ class App(QMainWindow, App):
         self.pushButton_2.clicked.connect(self.editTask)
         self.pushButton_3.clicked.connect(self.deleteTask)
         self.pushButton_4.clicked.connect(self.GptCreator)
-        self.task_names = set()
         self.fill()
 
     def addTask(self):
@@ -53,7 +52,6 @@ class App(QMainWindow, App):
                     self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
             self.actualizar_tareas
     def actualizar_tareas(self):
-        self.task_names.clear()
         for i in reversed(range(self.verticalLayout.count())):
             self.verticalLayout.itemAt(i).widget().setParent(None)
         self.verticalLayoutWidget.setGeometry(QRect(10, 120, 711, 0))
@@ -62,15 +60,13 @@ class App(QMainWindow, App):
         tareas = task.obtener_tareas()
         if tareas is not None:
             for i in tareas:
-                if i[0] not in self.task_names:
-                    horas = str(i[3]).split(':')
-                    hora = horas[0]+':'+horas[1]
-                    widget = Taskwidget(i[0],i[1],i[2],hora)
-                    self.verticalLayout.addWidget(widget)
-                    self.task_names.add(i[0])
-                    w = self.verticalLayoutWidget.size().width()
-                    h = self.verticalLayoutWidget.size().height()+30
-                    self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
+                horas = str(i[3]).split(':')
+                hora = horas[0]+':'+horas[1]
+                widget = Taskwidget(i[0],i[1],i[2],hora)
+                self.verticalLayout.addWidget(widget)
+                w = self.verticalLayoutWidget.size().width()
+                h = self.verticalLayoutWidget.size().height()+30
+                self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
     def getDeleteTask(self):
         selecteds = list()
         for i in range(self.verticalLayout.count()):
@@ -84,17 +80,19 @@ class App(QMainWindow, App):
         self.gpt.show()
     def generateTask(self):
         if self.gpt.textEdit.toPlainText():
-            result = AiGenerator(self.gpt.textEdit.toPlainText(),self.task_names)
+            self.gpt.label_gpt.setText('>GPT: Generando...')
+            self.gpt.label_gpt.setStyleSheet('color: cyan;')
+            result = AiGenerator(self.gpt.textEdit.toPlainText())
             tarea = result.split('_')
             hora = tarea[3]+':00'
             ins = task.añadir_tarea(tarea[0],tarea[1],tarea[2],hora.replace('.',''))
             if ins == 1:
-                self.gpt.label_gpt.setText('>GPT: Generando...')
-                self.gpt.label_gpt.setStyleSheet('color: cyan;')
                 self.gpt.close()
                 self.actualizar_tareas()
             else:
-                self.gpt.textEdit.setText('Nombre de tarea en uso.')
+                self.gpt.label_gpt.setText('>GPT:...')
+                self.gpt.label_gpt.setStyleSheet('color: red;')
+                self.gpt.textEdit.setText('Fecha y Hora ocupadas')
 class Taskwidget(QWidget, TaskWidget):
     def __init__(self, Nombre, Descripcion, Fecha, hora):
         super(Taskwidget, self).__init__()
@@ -134,7 +132,7 @@ class Form(QWidget, Form):
                 self.task_added.emit()
                 self.close()
             else:
-                self.label_6.setText('Nombre en uso')
+                self.label_6.setText('Fecha y Hora ocupadas')
                 self.label_6.setStyleSheet('color: red')
         else:
             self.dialog = Dialog()
@@ -144,9 +142,13 @@ class Form(QWidget, Form):
         desc = self.lineEdit_4.text()
         fecha = self.lineEdit_2.text()
         horas = self.lineEdit_3.text()
-        task.editar_tarea(name,desc,fecha,horas)
-        self.task_edited.emit()
-        self.close()
+        edited = task.editar_tarea(name,desc,fecha,horas)
+        if edited == 1:
+            self.task_edited.emit()
+            self.close()
+        else:
+            self.label_6.setText('Fecha y Hora ocupadas')
+            self.label_6.setStyleSheet('color: red')
 class Dialog(QDialog, Dialog):
     def __init__(self):
         super(Dialog, self).__init__()

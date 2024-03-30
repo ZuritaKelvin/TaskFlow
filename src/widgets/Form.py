@@ -88,7 +88,7 @@ class Ui_Form(object):
 "	border: 1px solid #ccc")
         self.label_6 = QLabel(Form)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(150, 180, 83, 16))
+        self.label_6.setGeometry(QRect(130, 180, 125, 16))
         QWidget.setTabOrder(self.lineEdit, self.lineEdit_4)
         QWidget.setTabOrder(self.lineEdit_4, self.lineEdit_2)
         QWidget.setTabOrder(self.lineEdit_2, self.lineEdit_3)

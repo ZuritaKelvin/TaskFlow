@@ -15,20 +15,21 @@ class TaskRepository:
                 Nombre VARCHAR(255),
                 Descripcion VARCHAR(255),
                 Fecha DATE,
-                Hora TIME
-            )
+                Hora TIME,
+                UNIQUE (Fecha, Hora)
+            );
         """)
 
     def añadir_tarea(self, nombre, descripcion, fecha, hora):
         tareas = self.obtener_tareas()
-        if tareas is not None:
-            for i in tareas:
-                if i[0] == nombre:return -1
         query = "INSERT INTO tareas (Nombre, Descripcion, Fecha, Hora) VALUES (%s, %s, %s, %s)"
         valores = (nombre, descripcion, fecha, hora)
-        self.cursor.execute(query, valores)
-        self.cnx.commit()
-        return 1
+        try:
+            self.cursor.execute(query, valores)
+            self.cnx.commit()
+            return 1
+        except:
+            return -1
 
     def eliminar_tarea(self, nombre):
         query = "DELETE FROM tareas WHERE Nombre = %s"
@@ -39,9 +40,13 @@ class TaskRepository:
     def editar_tarea(self, nombre, descripcion, fecha, hora):
         query = "UPDATE tareas SET Descripcion = %s, Fecha = %s, Hora = %s WHERE Nombre = %s"
         valores = (descripcion, fecha, hora, nombre)
-        self.cursor.execute(query, valores)
-        self.cnx.commit()
-
+        try:
+            self.cursor.execute(query, valores)
+            self.cnx.commit()
+            return 1
+        except:
+            return -1
+    
     def obtener_tareas(self):
         self.cursor.execute("SELECT * FROM tareas")
         return self.cursor.fetchall()
