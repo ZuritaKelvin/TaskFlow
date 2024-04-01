@@ -7,9 +7,17 @@ tomorrow = str(today).split('-')
 tomorrow[2] = str(int(tomorrow[2])+1)
 hora = datetime.now().strftime("%H:%M")
 hoy = date.today().strftime("%A")
-# Crea una instancia del cliente de OpenAI
+
 client = OpenAI(api_key=config.api_key)
 def AiGenerator(peticion):
+    """AiGenerator
+
+    Args:
+        peticion (str): the user text i will use for the Get Request.
+
+    Returns:
+        list: Returns a list with the result of Get Request.
+    """
     completion = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[

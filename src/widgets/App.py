@@ -21,6 +21,11 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
 import Icons_rc
 
 class Ui_MainWindow(object):
+    """App Class
+
+    Args:
+        object (QMainWindow): Main Class of TaskFlow App
+    """
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")

@@ -19,6 +19,11 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QRadioButton,
     QSizePolicy, QWidget)
 
 class Ui_Form(object):
+    """Task Class
+
+    Args:
+        object (QForm): Widget to show each Task in the Main Window.
+    """
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")

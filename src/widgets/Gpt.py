@@ -20,6 +20,11 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogBu
 import Icons_rc
 
 class Ui_Dialog(object):
+    """Gpt Dialog Class
+
+    Args:
+        object (QDialog): Class to Generate a Task with a GPT API inplementation.
+    """
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")

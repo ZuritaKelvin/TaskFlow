@@ -21,6 +21,10 @@ from datetime import date, datetime
 import Icons_rc
 
 class Ui_Form(object):
+    """Form Class
+    Args:
+    object (QForm): Form class to Create and Update Tasks.
+    """
     def setupUi(self, Form):
 
         if not Form.objectName():

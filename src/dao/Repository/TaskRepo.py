@@ -12,8 +12,8 @@ class TaskRepository:
         self.cursor.execute("USE Task")
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS tareas (
-                Nombre VARCHAR(255),
-                Descripcion VARCHAR(255),
+                Nombre VARCHAR(30),
+                Descripcion VARCHAR(90),
                 Fecha DATE,
                 Hora TIME,
                 UNIQUE (Fecha, Hora)
