@@ -56,7 +56,7 @@ class App(QMainWindow, App):
         """
         selecteds = self.getDeleteTask()
         if len(selecteds) == 0:
-            self.label_6.setText('Seleciona una Tarea')
+            self.label_6.setText('Seleciona minimo 1 tarea')
         else:
             self.label_6.setText('')
             for i in selecteds:
