@@ -1,50 +1,44 @@
-import mysql.connector
+import sqlite3
 
 class TaskRepository:
     def __init__(self):
-        self.cnx = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="root"
-        )
+        self.cnx = sqlite3.connect('tasks.db')
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("CREATE DATABASE IF NOT EXISTS Task")
-        self.cursor.execute("USE Task")
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS tareas (
-                Nombre VARCHAR(30),
-                Descripcion VARCHAR(90),
-                Fecha DATE,
-                Hora TIME,
+                Nombre TEXT,
+                Descripcion TEXT,
+                Fecha TEXT,
+                Hora TEXT,
                 UNIQUE (Fecha, Hora)
             );
         """)
 
     def añadir_tarea(self, nombre, descripcion, fecha, hora):
-        tareas = self.obtener_tareas()
-        query = "INSERT INTO tareas (Nombre, Descripcion, Fecha, Hora) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO tareas (Nombre, Descripcion, Fecha, Hora) VALUES (?, ?, ?, ?)"
         valores = (nombre, descripcion, fecha, hora)
         try:
             self.cursor.execute(query, valores)
             self.cnx.commit()
             return 1
-        except:
+        except sqlite3.IntegrityError:
             return -1
 
-    def eliminar_tarea(self, nombre):
-        query = "DELETE FROM tareas WHERE Nombre = %s"
-        valores = (nombre,)
+    def eliminar_tarea(self, fecha, hora):
+        print(fecha,'.',hora)
+        query = "DELETE FROM tareas WHERE Fecha = ? AND Hora = ?"
+        valores = (fecha, hora)
         self.cursor.execute(query, valores)
+        self.cursor.execute("SELECT * FROM tareas WHERE Fecha = ? AND Hora = ?",valores)
         self.cnx.commit()
-
     def editar_tarea(self, nombre, descripcion, fecha, hora):
-        query = "UPDATE tareas SET Descripcion = %s, Fecha = %s, Hora = %s WHERE Nombre = %s"
+        query = "UPDATE tareas SET Descripcion = ?, Fecha = ?, Hora = ? WHERE Nombre = ?"
         valores = (descripcion, fecha, hora, nombre)
         try:
             self.cursor.execute(query, valores)
             self.cnx.commit()
             return 1
-        except:
+        except sqlite3.IntegrityError:
             return -1
     
     def obtener_tareas(self):

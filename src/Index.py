@@ -60,12 +60,14 @@ class App(QMainWindow, App):
         else:
             self.label_6.setText('')
             for i in selecteds:
-                    task.eliminar_tarea(i.label.text().replace('  ',''))
-                    self.verticalLayout.removeWidget(i)
-                    i.deleteLater()
-                    w = self.verticalLayoutWidget.size().width()
-                    h = self.verticalLayoutWidget.size().height()-30
-                    self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
+                Fecha = i.label_3.text().replace(' ','')
+                Hora = i.label_4.text().replace(' ','')+':00'
+                self.deleted = task.eliminar_tarea(Fecha,Hora)
+                self.verticalLayout.removeWidget(i)
+                i.deleteLater()
+                w = self.verticalLayoutWidget.size().width()
+                h = self.verticalLayoutWidget.size().height()-30
+                self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
             self.actualizar_tareas
     def actualizar_tareas(self):
         """actualizar_tareas()
