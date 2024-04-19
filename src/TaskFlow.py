@@ -128,6 +128,21 @@ class App(QMainWindow, App):
                 self.gpt.label_gpt.setText('>GPT:...')
                 self.gpt.label_gpt.setStyleSheet('color: red;')
                 self.gpt.textEdit.setText('Fecha y Hora ocupadas')
+    @staticmethod
+    def TaskAdd(self,content):
+        """generateTask
+        
+        Method to generate a Task making a Get Request from GPT API.
+        """
+        result = AiGenerator(content)
+        tarea = result.split('_')
+        hora = tarea[3]+':00'
+        ins = task.añadir_tarea(tarea[0],tarea[1],tarea[2],hora.replace('.',''))
+        if ins == 1:
+            print("Tarea Añadida!")
+        else:
+            print("Error revisa la tarea enviada")
+
 class Taskwidget(QWidget, TaskWidget):
     """Task Class Inherited
 
