@@ -1,13 +1,11 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import *
 from PySide6.QtWidgets import *
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import *
 from PySide6.QtWidgets import QWidget
 from widgets.App import Ui_MainWindow as App
 from widgets.Task import Ui_Form as TaskWidget
 from widgets.Form import Ui_Form as Form
 from widgets.Gpt import Ui_Dialog as Ai
-from PySide6.QtWidgets import *
-from PySide6.QtCore import QRect,Signal, QSize, QTimer
 from dao.Repository.TaskRepo import TaskRepository as Task
 from openaiApi.main import AiGenerator
 task = Task()
@@ -39,22 +37,20 @@ class App(QMainWindow, App):
 
         Method to Update a Task.
         """
-        selected = self.getDeleteTask()
+        selected = self.getSelectedTask()
         if len(selected) == 0 or len(selected)>1:
             self.label_6.setText('Seleciona una tarea Obligatoriamente')
         else:
             self.label_6.setText('')
-            self.task_names.clear()
-            self.label_6.setText('')
-            self.form = Form('u',selected[0])
-            self.form.task_edited.connect(self.actualizar_tareas)
-            self.form.show()
+            self.formEdit = Form('u',selected[0])
+            self.formEdit.task_edited.connect(self.actualizar_tareas)
+            self.formEdit.show()
     def deleteTask(self):
         """deleteTask()
 
         Method to remove a Task.
         """
-        selecteds = self.getDeleteTask()
+        selecteds = self.getSelectedTask()
         if len(selecteds) == 0:
             self.label_6.setText('Seleciona minimo 1 tarea')
         else:
@@ -75,8 +71,9 @@ class App(QMainWindow, App):
         Method to delete all Tasks and fill in again.
         """
         for i in reversed(range(self.verticalLayout.count())):
+            self.verticalLayout.itemAt(i).widget().deleteLater()
             self.verticalLayout.itemAt(i).widget().setParent(None)
-        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 711, 0))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 770, 0))
         self.fill()
     def fill(self):
         """fill()
@@ -93,8 +90,8 @@ class App(QMainWindow, App):
                 w = self.verticalLayoutWidget.size().width()
                 h = self.verticalLayoutWidget.size().height()+30
                 self.verticalLayoutWidget.setGeometry(QRect(10, 120, w, h))
-    def getDeleteTask(self):
-        """getDeleteTask
+    def getSelectedTask(self):
+        """getSelectedTask
         
         Returns:
             list: Returns a list with all selecteds Tasks.
@@ -128,20 +125,7 @@ class App(QMainWindow, App):
                 self.gpt.label_gpt.setText('>GPT:...')
                 self.gpt.label_gpt.setStyleSheet('color: red;')
                 self.gpt.textEdit.setText('Fecha y Hora ocupadas')
-    @staticmethod
-    def TaskAdd(self,content):
-        """generateTask
-        
-        Method to generate a Task making a Get Request from GPT API.
-        """
-        result = AiGenerator(content)
-        tarea = result.split('_')
-        hora = tarea[3]+':00'
-        ins = task.añadir_tarea(tarea[0],tarea[1],tarea[2],hora.replace('.',''))
-        if ins == 1:
-            print("Tarea Añadida!")
-        else:
-            print("Error revisa la tarea enviada")
+
 
 class Taskwidget(QWidget, TaskWidget):
     """Task Class Inherited
@@ -181,7 +165,6 @@ class Form(QWidget, Form):
                 self.lineEdit_2.setText(selected.label_3.text().replace('  ',''))
                 self.lineEdit_3.setText(selected.label_4.text().replace('  ',''))
                 self.pushButton.setText('Guardar')
-                self.lineEdit.setReadOnly(True)
                 self.pushButton.clicked.connect(self.Actualizar)                
     def submit(self):
         """submit
@@ -212,7 +195,7 @@ class Form(QWidget, Form):
         name = self.lineEdit.text()
         desc = self.lineEdit_4.text()
         fecha = self.lineEdit_2.text()
-        horas = self.lineEdit_3.text()
+        horas = self.lineEdit_3.text()+':00'
         edited = task.editar_tarea(name,desc,fecha,horas)
         if edited == 1:
             self.task_edited.emit()
@@ -236,7 +219,7 @@ class Gpt(QDialog, Ai):
         self.timer.timeout.connect(self.txt)
         self.Saludo = 'Hola! En que puedo ayudarte?'
         self.text = self.label_gpt.text()
-        self.timer.start(40)
+        self.timer.start(30)
         self.index = 0
     def txt(self):
         """txt

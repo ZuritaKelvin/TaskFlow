@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Images/calendar_add_on_24dp_FILL0_wght400_GRAD0_opsz24.png</file>
     <file>Images/GPT_3.png</file>
+    <file>Images/MenuIcon.png</file>
     <file>Images/GPT.png</file>
     <file>Images/TaskFlowApp.png</file>
   </qresource>

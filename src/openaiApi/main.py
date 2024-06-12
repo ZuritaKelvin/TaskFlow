@@ -26,3 +26,20 @@ def AiGenerator(peticion):
             ]
         )
     return completion.choices[0].message.content
+def getEvent(peticion):
+    """getEvent method\n
+
+    Args:
+        peticion (string): The task that u want to get the Event.
+
+    Returns:
+        string: Event of the task provided
+    """
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "Tu tarea es en base al mensaje del usuario que sera una tarea que hacer devolveras un titulo un datetime de inicio de la tare y un datetime final de la tarea por ejemplo si el usuario te la da siguiente tarea:Reunion.Tengo una reunion de 1 hora.2024-05-21.12:21 Tu tarea de igual manera sera dar la siguiente respuesta separando cada item con un punto '.' asi:Reunion.2024.5.21.12.21.2024.5.21.13.21"},
+            {"role": "user", "content": peticion}
+        ]
+    )
+    return completion.choices[0].message.content

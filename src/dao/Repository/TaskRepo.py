@@ -8,9 +8,9 @@ class TaskRepository:
             CREATE TABLE IF NOT EXISTS tareas (
                 Nombre TEXT,
                 Descripcion TEXT,
-                Fecha TEXT,
-                Hora TEXT,
-                UNIQUE (Fecha, Hora)
+                Fecha TEXT NOT NULL,
+                Hora TEXT NOT NULL,
+                PRIMARY KEY (Fecha, Hora)
             );
         """)
 
@@ -25,15 +25,13 @@ class TaskRepository:
             return -1
 
     def eliminar_tarea(self, fecha, hora):
-        print(fecha,'.',hora)
         query = "DELETE FROM tareas WHERE Fecha = ? AND Hora = ?"
         valores = (fecha, hora)
         self.cursor.execute(query, valores)
-        self.cursor.execute("SELECT * FROM tareas WHERE Fecha = ? AND Hora = ?",valores)
         self.cnx.commit()
     def editar_tarea(self, nombre, descripcion, fecha, hora):
-        query = "UPDATE tareas SET Descripcion = ?, Fecha = ?, Hora = ? WHERE Nombre = ?"
-        valores = (descripcion, fecha, hora, nombre)
+        query = "UPDATE tareas SET Nombre = ?, Descripcion = ? WHERE Fecha = ? and Hora = ?"
+        valores = (nombre,descripcion, fecha, hora)
         try:
             self.cursor.execute(query, valores)
             self.cnx.commit()

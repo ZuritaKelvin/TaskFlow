@@ -47,7 +47,7 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet(u"color: darkcyan;border: 2px solid #ccc;border-radius:4px;padding:2px;")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 711, 0))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 120, 770, 0))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
 
         self.label_4 = QLabel(self.layoutWidget)
         self.label_4.setObjectName(u"label_4")
-
+        self.label_4.setMinimumSize(QSize(90,0))
         self.horizontalLayout.addWidget(self.label_4)
 
         self.label_5 = QLabel(self.layoutWidget)
