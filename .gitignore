@@ -1,4 +1,4 @@
 Index.spec
 build
 dist
-config.py
+src\openaiApi\config.py
